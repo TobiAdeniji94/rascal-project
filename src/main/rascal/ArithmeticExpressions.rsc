@@ -12,5 +12,4 @@ start syntax Exp
     > left add: Exp "+" Exp
     > left sub: Exp "-" Exp
     > left \mod: Exp "%" Exp
-    // > left \num: Exp
     ;

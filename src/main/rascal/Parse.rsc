@@ -2,11 +2,18 @@ module Parse
 
 import vis::Text;
 
-import ArithmeticExpressions;
+// import ArithmeticExpressions;
+
+import JsSyntax;
 
 import ParseTree;
 
-import Expression;
+// import Expression;
 
 
-Expression::Exp parseExp(str input) = implode(#Expression::Exp, parse(#ArithmeticExpressions::Exp, input));
+// Expression::Exp parseExp(str input) = implode(#Expression::Exp, parse(#ArithmeticExpressions::Exp, input));
+
+Prog parseJs(str input) = parse(#Prog, input);
+Prog parseJs(loc input) = parse(#Prog, input);
+
+// parseJs(|project://rascal-project/src/main/rascal/test.js|)
