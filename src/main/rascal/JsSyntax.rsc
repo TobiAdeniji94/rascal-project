@@ -2,22 +2,26 @@ module JsSyntax
 
 extend Literals;
 
-start syntax Prog = prog: JavaScript+ Semicolon*;
+start syntax Prog = prog: JavaScript+ Semicolon?;
 
-syntax Semicolon = ";";
+syntax Semicolon = semicolon: ";";
 
-syntax JavaScript 
-    = Exp Semicolon*
-    | Conditionals
-    | Functions
+syntax Comments = "//";
+
+start syntax JavaScript 
+    = expression: Exp Semicolon*
+    | conditional: Conditional
+    | functions: Functions
     // | Classes
     ;
 
 syntax Exp 
-    = Identifier
-    | Int
-    | String
+    = iden:Identifier
+    | \int: Int
+    | string: String
     | bracket "(" Exp ")"
+    | bracketExp: Exp"(" Exp ")"
+    > left fieldAccess: Exp "." Exp
     > left div: Exp "/" Exp
     > left mul: Exp "*" Exp
     > left add: Exp "+" Exp
@@ -35,20 +39,22 @@ syntax Exp
     > left ternary: Exp "?" Exp ":" Exp
     > left comma: Exp "," Exp
     > left arrow: Exp "=\>" Exp
+    > left not: "!" Exp
     > returnExp: "return" Exp
     ;
 
-syntax Conditionals 
+syntax Conditional
     = ifCond: "if" "(" Exp ")" "{" JavaScript "}"
     | ifElse: "if" "(" Exp ")" "{" JavaScript "}" ElseIf*  "else" "{" JavaScript "}"
     // | elseIf: "else" "if" "(" Exp ")" "{" JavaScript "}"
     ;
 
-syntax ElseIf = "else" "if" "(" Exp ")" "{" JavaScript "}";
+syntax ElseIf = elseIf: "else" "if" "(" Exp ")" "{" "("JavaScript")" "}";
 
 syntax Functions 
-    = function: "function" Identifier "("Exp ","Exp ")" "{" JavaScript"}"
-    | function: "function" Identifier "("Exp ")" "{" JavaScript"}"
-    | function: "const" Identifier "=" "("Exp ","Exp ")" "=\>" "{" JavaScript "}"
-    // | function: "function" "(" ")" "{" JavaScript "}" "(" Exp ")"
+    = function: "function" Identifier? "(" {Exp ","}+ ")" "{" JavaScript "return" JavaScript "}"
     ;
+
+// syntax Classes 
+//     = class: "class"
+//     ;
