@@ -10,8 +10,8 @@ data Identifier = id(str name);
 
 data Exp 
     = iden(str name)
-    | \int(int integer)
-    | string(str string)
+    | \int(str integer)
+    | string(str strConst)
     | \bracket(Exp exp)
     | bracketExp(Exp lhs, Exp rhs)
     | fieldAccess(Exp lhs, Exp rhs)
@@ -45,7 +45,7 @@ data ElseIf
     = elseIf(Exp condition, JavaScript body)
     ;
 data Functions 
-    = function(list[Identifier] fuctionName, list[Exp] params, JavaScript body, JavaScript alternate)
+    = function(list[Identifier] functionName, list[Exp] params, JavaScript body, JavaScript alternate)
     ;
 
 data JavaScript
